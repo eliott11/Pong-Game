@@ -70,7 +70,7 @@
             }
         }
 
-        function Joueur(pos, velocity, width, height) {
+        function Player(pos, velocity, width, height) {
             this.pos = pos;
             this.velocity = velocity;
             this.width = width;
@@ -117,8 +117,8 @@
         // let ballVelocityY = 10;
         // class balle :
         let ball = new Ball(vec2(200, 200), vec2(10, 10), 20);
-        const player1 = new Joueur(vec2(10, 50), vec2(5, 5), 20, 220);
-        const player2 = new Joueur(vec2(canvas.width - 30, 30), vec2(5, 5), 20, 220);
+        const player1 = new Player(vec2(10, 50), vec2(5, 5), 20, 220);
+        const player2 = new Player(vec2(canvas.width - 30, 30), vec2(5, 5), 20, 220);
 
         function gameUpdate() {
             // ballX += ballVelocityX;
