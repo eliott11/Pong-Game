@@ -64,7 +64,6 @@
 
         class Ball {
           constructor(pos, velocity, radius) {
-            
             this.pos = pos;
             this.velocity = velocity;
             this.radius = radius;
@@ -124,7 +123,7 @@
           };
         }
 
-        function playerCollisionWithTheEdges (Player) {
+        function playerCollisionWithTheEdges(Player) {
             if (Player.pos.y <= 0) {
                 Player.pos.y = 0;
             }
@@ -145,10 +144,10 @@
         }
 
         function ballPaddleCollision(ball, Player) {
-            let dx = Math.abs(ball.pos.x - Player.getCenter().x);
-            let dy = Math.abs(ball.pos.y - Player.getCenter().y);
+            let distanceX = Math.abs(ball.pos.x - Player.getCenter().x);
+            let distanceY = Math.abs(ball.pos.y - Player.getCenter().y);
 
-            if (dx <= (ball.radius + Player.getHalfWidth()) && dy <= (Player.getHalfHeight() + ball.radius)) {
+            if (distanceX <= (ball.radius + Player.getHalfWidth()) && distanceY <= (Player.getHalfHeight() + ball.radius)) {
                 ball.velocity.x *= -1;
             }
         }
@@ -182,23 +181,21 @@
                 ball.pos.x = 150;
                 ball.pos.y = (Math.random() * (canvas.height - 200)) +100;
             }
-
             ball.velocity.x *= -1;
             ball.velocity.y *= -1;
         }
 
         function addScore(ball, player1, player2) {
-            if(ball.pos.x <= -ball.radius) {
-                player2.score += 1;
-                document.getElementById("player2Score").innerHTML = player2.score;
-                respawnBall(ball);
-            }
             if(ball.pos.x >= canvas.width + ball.radius) {
                 player1.score += 1;
                 document.getElementById("player1Score").innerHTML = player1.score;
                 respawnBall(ball);
             }
-
+            if(ball.pos.x <= -ball.radius) {
+                player2.score += 1;
+                document.getElementById("player2Score").innerHTML = player2.score;
+                respawnBall(ball);
+            }
         }
 
         let ballX = 200;
@@ -206,10 +203,14 @@
         let ballRadius = 50;
         let ballVelocityX = 9;
         let ballVelocityY = 9;
+        let positionStartX = 5;
+        let positionStartY = 5;
+        let playerTop = 20;
+        let playerBottom = 220;
         // let maxSpeed = 15;
         let ball = new Ball(vec2(ballX, ballY), vec2(ballVelocityX, ballVelocityY), 20);
-        const player1 = new Player(vec2(10, ballRadius), vec2(5, 5), 20, 220);
-        const player2 = new Player(vec2(canvas.width - 30, 30), vec2(5, 5), 20, 220);
+        const player1 = new Player(vec2(10, ballRadius), vec2(positionStartX, positionStartY), playerTop, playerBottom);
+        const player2 = new Player(vec2(canvas.width - 30, 30), vec2(positionStartX, positionStartY), playerTop, playerBottom);
 
         function gameUpdate() {
             ball.update();
@@ -220,7 +221,6 @@
             player2Bot(ball, player2);
             ballPaddleCollision(ball, player1);
             ballPaddleCollision(ball, player2);
-
             addScore(ball, player1, player2);
         }
 
